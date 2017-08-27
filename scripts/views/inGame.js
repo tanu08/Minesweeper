@@ -12,10 +12,11 @@ define(["backbone",
         },
 
         initialize: function() {
-            _.bind(this);
+
         },
 
         render: function() {
+            this.creatingGrid();
             return this.el;
         },
 
@@ -27,7 +28,7 @@ define(["backbone",
             }
             for (i = 0; i < n; i++) {
                 for (j = 0; j < n; j++) {
-                    matrix[i][j] = 0;
+                    this.matrix[i][j] = 0;
                 }
             }
             this.gameIntensity();
@@ -36,6 +37,7 @@ define(["backbone",
         },
 
         gameIntensity: function() {
+            var n = this.model.get('grid');
             switch (this.model.get('level')) {
                 case 'easy':
                     for (i = 0; i < Math.ceil(n * 0.4); i++)
@@ -56,26 +58,29 @@ define(["backbone",
         },
 
         placingBombs: function() {
-            var placeBombInX = _.random(0, this.model.get('grid'));
-            var placeBombInY = _.random(0, this.model.get('grid'));
+            var placeBombInX = _.random(0, this.model.get('grid') - 1);
+            var placeBombInY = _.random(0, this.model.get('grid') - 1);
             this.matrix[placeBombInX][placeBombInY] = 'BOMB';
         },
 
         isSafe: function(cur_x, cur_y) {
-            if ((this.matrix[cur_x][cur_y] === 'BOMB') && (cur_x < n && cur_x >= 0) && (cur_y < n && cur_y >= 0))
-                return true;
+            var n = this.model.get('grid');
+            if ((cur_x < n && cur_x >= 0) && (cur_y < n && cur_y >= 0))
+                if ((this.matrix[cur_x][cur_y] === 'BOMB'))
+                    return true;
             return false;
         },
 
         setCountOfTiles: function() {
+            var n = this.model.get('grid');
             var x_moves = [-1, 0, 1, 1, 1, 0, -1, -1];
             var y_moves = [1, 1, 1, 0, -1, -1, -1, 0];
             for (col = 0; col < n; col++) {
                 for (var row = 0; row < n; row++) {
                     for (i = 0; i < 8; i++) {
-                        cur_x = x_moves[i];
-                        cur_y = y_moves[i];
-                        if (isSafe()) {
+                        cur_x = this.matrix[row][col] + x_moves[i];
+                        cur_y = this.matrix[row][col] + y_moves[i];
+                        if (this.isSafe(cur_x, cur_y)) {
                             this.matrix[cur_x][cur_y] += 1;
                         }
 
@@ -86,6 +91,7 @@ define(["backbone",
         },
 
         appendToView: function() {
+            var n = this.model.get('grid');
             for (row = 0; row < n; row++) {
                 this.$el.append($('div.row-' + row));
                 for (var i = 0; i < n; i++) {

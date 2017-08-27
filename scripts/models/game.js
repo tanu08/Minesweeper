@@ -1,5 +1,8 @@
-define([], function() {
-    var game = Backbone.Models.extend({
+define(["backbone",
+    "underscore",
+    "jquery"
+], function(Backbone, _, $) {
+    var game = Backbone.Model.extend({
         defaults: {
             players: 1,
             level: 'easy',
