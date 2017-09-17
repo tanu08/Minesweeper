@@ -78,10 +78,10 @@ define(["backbone",
             for (col = 0; col < n; col++) {
                 for (var row = 0; row < n; row++) {
                     for (i = 0; i < 8; i++) {
-                        cur_x = this.matrix[row][col] + x_moves[i];
-                        cur_y = this.matrix[row][col] + y_moves[i];
+                        cur_x = row + x_moves[i];
+                        cur_y = col + y_moves[i];
                         if (this.isSafe(cur_x, cur_y)) {
-                            this.matrix[cur_x][cur_y] += 1;
+                            this.matrix[row][col] += 1;
                         }
 
                     }
