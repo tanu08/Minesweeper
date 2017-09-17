@@ -95,7 +95,7 @@ define(["backbone",
             for (row = 0; row < n; row++) {
                 this.$el.append($('<div class="row-' + row + '"></div>'));
                 for (var i = 0; i < n; i++) {
-		    var tile = $('<div class="tile tile-' + i + '" data-value=' + this.matrix[row][i] + '></div>');
+		    var tile = $('<div class="tile tile-' + i + '" data-value=' + this.matrix[row][i] + '>' + this.matrix[row][i]  + '</div>');
                     this.$el.find('div.row-' + row).append(tile);
                 }
             }
