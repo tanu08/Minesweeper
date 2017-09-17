@@ -5,7 +5,7 @@ define(["backbone",
 ], function(Backbone, _, $, gameGrid) {
     var inGame = Backbone.View.extend({
 
-        className: 'gameGrid',
+        el: '.gameGrid',
 
         events: {
             'click .tile': 'showValue'
@@ -93,9 +93,10 @@ define(["backbone",
         appendToView: function() {
             var n = this.model.get('grid');
             for (row = 0; row < n; row++) {
-                this.$el.append($('div.row-' + row));
+                this.$el.append($('<div class="row-' + row + '"></div>'));
                 for (var i = 0; i < n; i++) {
-                    this.$el.find('div.row-' + row).append($('div').addClass('tile-' + i).attr('data-value', this.matrix[row][i]))
+		    var tile = $('<div class="tile tile-' + i + '" data-value=' + this.matrix[row][i] + '></div>');
+                    this.$el.find('div.row-' + row).append(tile);
                 }
             }
         },

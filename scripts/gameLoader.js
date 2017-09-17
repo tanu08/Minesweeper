@@ -16,7 +16,8 @@ require.config({
         "underscore": "../node_modules/underscore/underscore",
         "jquery": "../node_modules/jquery/dist/jquery",
         "hbs": "../node_modules/require-handlebars-plugin/hbs"
-    }
+    },
+    waitSeconds : 30
 });
 
 require([
